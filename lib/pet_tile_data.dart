@@ -19,10 +19,14 @@ class PetDataTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [Image.asset(petImage), Text(petName)],
+    return Stack(children: [
+      Container(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [Image.asset(petImage), Text(petName)],
+          ),
+        ),
       ),
-    );
+    ]);
   }
 }

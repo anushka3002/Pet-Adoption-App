@@ -1,6 +1,8 @@
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class DetailsPage extends StatefulWidget {
   final String name;
@@ -18,15 +20,78 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  bool isPlaying = false;
+  final controller = ConfettiController();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Welcome"),
-      ),
-      body: Container(
-        child: Text(""),
-      ),
-    );
+    return Stack(alignment: Alignment.center, children: [
+      Scaffold(
+          appBar: AppBar(
+            title: Text("Welcome"),
+          ),
+          body: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Image.asset(widget.image),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  widget.name,
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  widget.price,
+                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  widget.age,
+                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
+                ),
+              ],
+            ),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: ElevatedButton(
+              onPressed: () {
+                // controller.play();
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: Text("You’ve now adopted ${widget.name}"),
+                    // content: const Text("You have raised a Alert Dialog Box"),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                        },
+                        child: Center(
+                          child: Container(
+                            color: Color.fromARGB(255, 204, 150, 222),
+                            padding: const EdgeInsets.all(14),
+                            child: const Text(
+                              "okay",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              child: Text('Adopt me'))),
+      // ConfettiWidget(
+      //   confettiController: controller,
+      //   shouldLoop: true,
+      //   // blastDirection:,
+      // )
+    ]);
   }
 }
