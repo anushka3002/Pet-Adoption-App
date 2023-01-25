@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/details_page.dart';
 import 'package:pet_adoption_app/history_page.dart';
 import 'package:pet_adoption_app/infrastructure/provider/registration_provider.dart';
+import 'package:pet_adoption_app/theme/theme_manager.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -12,19 +13,28 @@ class HomePage extends ConsumerStatefulWidget {
   ConsumerState<HomePage> createState() => _HomePageState();
 }
 
+ThemeManager _themeManager = ThemeManager();
+
 class _HomePageState extends ConsumerState<HomePage> {
   void updateList(String value) {
     setState(() {
-      ref.read(homeProvider).students =
-          ref.read(homeProvider).students.where((element) => element.name!.toLowerCase().contains(value.toLowerCase())).toList();
+      ref.read(homeProvider).pets =
+          ref.read(homeProvider).pets.where((element) => element.name!.toLowerCase().contains(value.toLowerCase())).toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // appBar: AppBar(title: Text("Theme"), actions: [
+        //   Switch(
+        //       value: _themeManager.themeMode == ThemeMode.dark,
+        //       onChanged: (newValue) {
+        //         _themeManager.toggleTheme(newValue);
+        //       })
+        // ]),
         body: Container(
-      decoration: const BoxDecoration(color: Colors.blue),
+      // decoration: const BoxDecoration(color: Colors.blue),
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
           padding: const EdgeInsets.only(left: 20, top: 80, bottom: 15, right: 20),
@@ -46,11 +56,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: Row(children: const [
                   Icon(
                     Icons.history,
-                    color: Colors.white,
+                    // color: Colors.black,
                   ),
                   Text(
                     "History",
-                    style: TextStyle(fontWeight: FontWeight.w400, color: Colors.white, fontSize: 15),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        // color: Colors.black,
+                        fontSize: 15),
                   )
                 ]),
               )
@@ -58,7 +71,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.only(top: 0, bottom: 0, left: 20, right: 20),
           child: TextField(
             onChanged: (value) {
               updateList(value);
@@ -73,13 +86,13 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           ),
         ),
-        ref.read(homeProvider).students.isEmpty
+        ref.read(homeProvider).pets.isEmpty
             ? const Center(
                 child: Text("No results found"),
               )
             : Expanded(
                 child: ListView.builder(
-                    itemCount: ref.read(homeProvider).students.length,
+                    itemCount: ref.read(homeProvider).pets.length,
                     itemBuilder: (BuildContext context, i) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -90,7 +103,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             } else {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => DetailsPage(
-                                  pet_details: ref.read(homeProvider).students[i],
+                                  pet_details: ref.read(homeProvider).pets[i],
                                   pet_history: i,
                                 ),
                               ));
@@ -110,12 +123,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         borderRadius: BorderRadius.circular(8.0),
                                         child: Padding(
                                             padding: const EdgeInsets.all(20),
-                                            child:
-                                                Image.asset(ref.read(homeProvider).students[i].image, width: 200, height: 150))),
+                                            child: Image.asset(ref.read(homeProvider).pets[i].image, width: 200, height: 150))),
                                     Column(
                                       children: [
                                         Text(
-                                          ref.read(homeProvider).students[i].name,
+                                          ref.read(homeProvider).pets[i].name,
                                           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                         ),
                                         Padding(

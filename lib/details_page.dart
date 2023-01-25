@@ -56,7 +56,7 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
                           ),
                           const SizedBox(height: 20),
                           Text(
-                            "Price: ${widget.pet_details.price}",
+                            "Price: \$${widget.pet_details.price}",
                             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
                           ),
                           const SizedBox(height: 20),
@@ -74,6 +74,9 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color.fromARGB(255, 27, 107, 173),
+            ),
             onPressed: () async {
               showDialog(
                 context: context,
@@ -110,7 +113,13 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
                 await _pref.setString("adoptedPets", widget.pet_details);
               }
             },
-            child: const Text("Adopted me"),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 120, vertical: 20),
+              child: const Text(
+                "Adopt me",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
           )
           // ConfettiWidget(
           //   confettiController: controller,
