@@ -1,27 +1,38 @@
+import 'dart:convert';
 import 'package:pet_adoption_app/pet_data_tile_new.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesData {
   static String anushkaData = "";
-  List<String> adoptedPetRef = [];
-
-  static Future<bool> saveAnushkaData(String isUserLoggedInStatus) async {
-    SharedPreferences sf = await SharedPreferences.getInstance();
-    return await sf.setString(anushkaData, "isUserLoggedInStatus");
+  // static bool isPetCheck = false;
+  // static List<PetDataNewTile> adoptedPetPref = [];
+  static Future<bool> saveAdoptedData(List<bool> token) async {
+    String jsonString = jsonEncode(token);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString("adoptedPetPref", jsonString);
+    print("adsfasdf");
+    return true;
   }
 
-  //  static Future<bool> saveAaa(List<bool> token) async {
-  //   SharedPreferences sf = await SharedPreferences.getInstance();
-  //   return await sf.setBool(adoptedPetRef, tokenn);
-  // }
-
-  // static Future<bool> saveAaa(List<String> tokenn) async {
-  //   SharedPreferences sf = await SharedPreferences.getInstance();
-  //   return await sf.setStringList(adoptedPetRef, tokenn);
-  // }
+  static Future<bool> savePetCheckData(bool isPetCheckStatus) async {
+    SharedPreferences sf = await SharedPreferences.getInstance();
+    return await sf.setBool("isPetCheck", isPetCheckStatus);
+  }
 
   static Future<String?> getUserLoogedInStatusFromSf() async {
     SharedPreferences sf = await SharedPreferences.getInstance();
     return sf.getString(anushkaData);
+  }
+
+  static Future getAdoptedData() async {
+    SharedPreferences sf = await SharedPreferences.getInstance();
+    // return sf.getString(anushkaData);
+    List myList = jsonDecode(sf.getString("adoptedPetPref") ?? "");
+    return myList;
+  }
+
+  static Future<bool?> getPetCheckData() async {
+    SharedPreferences sf = await SharedPreferences.getInstance();
+    return sf.getBool("isPetCheck");
   }
 }
