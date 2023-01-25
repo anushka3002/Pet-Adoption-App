@@ -4,13 +4,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesData {
   static String anushkaData = "";
-  // static bool isPetCheck = false;
-  // static List<PetDataNewTile> adoptedPetPref = [];
   static Future<bool> saveAdoptedData(List<bool> token) async {
     String jsonString = jsonEncode(token);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("adoptedPetPref", jsonString);
-    print("adsfasdf");
     return true;
   }
 
@@ -24,10 +21,10 @@ class SharedPreferencesData {
     return sf.getString(anushkaData);
   }
 
-  static Future getAdoptedData() async {
+  static Future<List<bool>> getAdoptedData() async {
     SharedPreferences sf = await SharedPreferences.getInstance();
     // return sf.getString(anushkaData);
-    List myList = jsonDecode(sf.getString("adoptedPetPref") ?? "");
+    List<bool> myList = jsonDecode(sf.getString("adoptedPetPref") ?? "");
     return myList;
   }
 

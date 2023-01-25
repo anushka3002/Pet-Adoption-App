@@ -29,15 +29,6 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    getDataabc() async {
-      var datanew = await SharedPreferencesData.getUserLoogedInStatusFromSf();
-      print(datanew);
-      print("datanew");
-    }
-
-    getDataabc();
-    print(ref.watch(homeProvider).historyData[widget.pet_history]);
-    print("ref.watch(homeProvider).historyData[widget.pet_history]");
     return Stack(alignment: Alignment.center, children: [
       Scaffold(
           appBar: AppBar(

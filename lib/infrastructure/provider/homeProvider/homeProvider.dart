@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_adoption_app/infrastructure/sharedPref/shared_pref.dart';
 import 'package:pet_adoption_app/pet_data_tile_new.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeProvider extends ChangeNotifier {
   late ChangeNotifierProviderRef<HomeProvider> ref;
   HomeProvider(this.ref);
   String name = "abc";
-  List historyData = [];
+  List<bool> historyData = [];
   List<PetDataNewTile> adoptedPet = [];
   List<PetDataNewTile> pets = [];
-  // bool adoptedNow = false;
 
-  startData() {
+  startData() async {
     pets = [
       PetDataNewTile(
         name: "Dog",
@@ -74,8 +75,17 @@ class HomeProvider extends ChangeNotifier {
         image: "assets/images/tortoise.jpeg",
       ),
     ];
+
+    bool? petCheck = await SharedPreferencesData.getPetCheckData();
     for (var _ in (pets ?? [])) {
       historyData.add(false);
+    }
+
+    if (petCheck == null) {
+      await SharedPreferencesData.savePetCheckData(true);
+      await SharedPreferencesData.saveAdoptedData(historyData);
+    } else {
+      List historyData123 = await SharedPreferencesData.getAdoptedData();
     }
   }
 

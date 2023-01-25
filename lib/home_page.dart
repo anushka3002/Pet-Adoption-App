@@ -29,7 +29,6 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     void updateList(String value) {
-      print(value.length);
       setState(() {
         display_pet_data =
             ref.read(homeProvider).pets.where((element) => element.name!.toLowerCase().contains(value.toLowerCase())).toList();
@@ -110,7 +109,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         child: InkWell(
                           onTap: () {
                             if (ref.watch(homeProvider).historyData[i] == true) {
-                              print("already adopted");
+                              inspect("already adopted");
                             } else {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => DetailsPage(
@@ -127,28 +126,42 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     color: ref.watch(homeProvider).historyData[i] == true
                                         ? Colors.grey
                                         : const Color.fromARGB(221, 203, 235, 247),
-                                    borderRadius: BorderRadius.circular(50)),
+                                    borderRadius: BorderRadius.circular(20)),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    ClipRRect(
-                                        borderRadius: BorderRadius.circular(8.0),
-                                        child: Padding(
-                                            padding: const EdgeInsets.all(20),
-                                            child: Image.asset(display_pet_data[i].image, width: 200, height: 150))),
                                     Column(
                                       children: [
-                                        Text(
-                                          display_pet_data[i].name,
-                                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                        ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 8.0),
-                                          child: Text(
-                                            ref.watch(homeProvider).historyData[i] == true ? "Already adopted" : "",
-                                            style: TextStyle(color: Color.fromARGB(255, 79, 76, 76)),
-                                          ),
-                                        )
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(20.0),
+                                              child: SizedBox(
+                                                height: 160,
+                                                width: 200,
+                                                child: Image.asset(
+                                                  fit: BoxFit.fill,
+                                                  display_pet_data[i].image,
+                                                ),
+                                              )),
+                                        ),
+                                        ref.watch(homeProvider).historyData[i] == true
+                                            ? const Padding(
+                                                padding: EdgeInsets.only(top: 0.0, bottom: 8.0),
+                                                child: Text(
+                                                  "Already adopted",
+                                                  style: TextStyle(color: Color.fromARGB(255, 79, 76, 76)),
+                                                ),
+                                              )
+                                            : const SizedBox.shrink()
                                       ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Text(
+                                        display_pet_data[i].name,
+                                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ],
                                 ),
