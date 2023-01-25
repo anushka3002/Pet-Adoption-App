@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_adoption_app/home_page.dart';
 import 'package:pet_adoption_app/intro_screen.dart';
 
 void main() {
@@ -41,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3),
-        () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const IntroScreen())));
+        () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage())));
   }
 
   @override
