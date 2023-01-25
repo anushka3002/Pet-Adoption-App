@@ -10,8 +10,6 @@ class HomeProvider extends ChangeNotifier {
   List<PetDataNewTile> adoptedPet = [];
   List<PetDataNewTile> students = [];
 
-  // Navigator.of(context).push(new MaterialPageRoute(builder: (context) => new HistoryPage()));
-
   startData() {
     students = [
       PetDataNewTile(

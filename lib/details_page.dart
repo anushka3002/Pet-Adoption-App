@@ -2,26 +2,22 @@ import 'dart:math';
 
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pet_adoption_app/infrastructure/provider/registration_provider.dart';
+import 'package:pet_adoption_app/pet_data_tile_new.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class DetailsPage extends StatefulWidget {
-  final String name;
-  final String age;
-  final String price;
-  final String image;
-  final bool adopted;
+class DetailsPage extends ConsumerStatefulWidget {
+  final pet_details;
+  var pet_history;
 
-  const DetailsPage(
-      {Key? key, required this.name, required this.age, required this.image, required this.price, required this.adopted})
-      : super(key: key);
+  DetailsPage({super.key, required PetDataNewTile this.pet_details, required this.pet_history});
 
   @override
-  State<DetailsPage> createState() => _DetailsPageState();
+  ConsumerState<DetailsPage> createState() => _DetailsPageState();
 }
 
-class _DetailsPageState extends State<DetailsPage> {
+class _DetailsPageState extends ConsumerState<DetailsPage> {
   bool isPlaying = false;
   late ConfettiController controller;
   @override
@@ -41,23 +37,23 @@ class _DetailsPageState extends State<DetailsPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(widget.image),
+                Image.asset(widget.pet_details.image),
                 const SizedBox(
                   height: 20,
                 ),
                 Text(
-                  widget.name,
+                  widget.pet_details.name,
                   textAlign: TextAlign.start,
                   style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  widget.price,
+                  widget.pet_details.price,
                   style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  widget.age,
+                  widget.pet_details.age,
                   style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
                 ),
               ],
@@ -65,47 +61,90 @@ class _DetailsPageState extends State<DetailsPage> {
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: ElevatedButton(
-              onPressed: () {
-                controller.play();
-                // widget.adopted =true;
-                showDialog(
-                  context: context,
-                  builder: (ctx) => AlertDialog(
-                    title: Text("You’ve now adopted ${widget.name}"),
-                    // content: const Text("You have raised a Alert Dialog Box"),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(ctx).pop();
-                        },
-                        child: Center(
-                          child: Container(
-                            color: Color.fromARGB(255, 204, 150, 222),
-                            padding: const EdgeInsets.all(14),
-                            child: const Text(
-                              "okay",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white),
-                            ),
+            onPressed: () async {
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: Text("You’ve now adopted ${widget.pet_details.name}"),
+                  // content: const Text("You have raised a Alert Dialog Box"),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                      },
+                      child: Center(
+                        child: Container(
+                          color: Color.fromARGB(255, 204, 150, 222),
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "okay",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                );
-              },
-              child: Text('Adopt me'))),
-      ConfettiWidget(
-        confettiController: controller,
-        shouldLoop: true,
-        blastDirection: pi,
-        particleDrag: 0.05,
-        emissionFrequency: 0.05,
-        numberOfParticles: 20,
-        gravity: 0.05,
-        colors: const [Colors.orange, Colors.yellow, Colors.pink],
-        // blastDirection:,
-      )
+                    ),
+                  ],
+                ),
+              );
+              if (ref.read(homeProvider).historyData[widget.pet_history] == true) {
+                widget.pet_history = false;
+              } else {
+                ref.read(homeProvider).historyData[widget.pet_history] = true;
+                ref.read(homeProvider).adoptedPet.add(widget.pet_details);
+                final SharedPreferences _pref = await SharedPreferences.getInstance();
+                await _pref.setString("adoptedPets", widget.pet_details);
+                // historyData[i] = true;
+              }
+              print(ref.read(homeProvider).historyData);
+              print("ref.read(homeProvider).historyData[widget.pet_history]");
+              print("adopted");
+            },
+            child: Text("Adopted me"),
+          )
+          //  ElevatedButton(
+          //     onPressed: () {
+          //       controller.play();
+          //       // widget.pet_details.adopted =true;
+          //       showDialog(
+          //         context: context,
+          //         builder: (ctx) => AlertDialog(
+          //           title: Text("You’ve now adopted ${widget.pet_details.name}"),
+          //           // content: const Text("You have raised a Alert Dialog Box"),
+          //           actions: <Widget>[
+          //             TextButton(
+          //               onPressed: () {
+          //                 Navigator.of(ctx).pop();
+          //               },
+          //               child: Center(
+          //                 child: Container(
+          //                   color: Color.fromARGB(255, 204, 150, 222),
+          //                   padding: const EdgeInsets.all(14),
+          //                   child: const Text(
+          //                     "okay",
+          //                     textAlign: TextAlign.center,
+          //                     style: TextStyle(color: Colors.white),
+          //                   ),
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       );
+          //     },
+          //     child: Text('Adopt me'))),
+          // ConfettiWidget(
+          //   confettiController: controller,
+          //   shouldLoop: true,
+          //   blastDirection: pi,
+          //   particleDrag: 0.05,
+          //   emissionFrequency: 0.05,
+          //   numberOfParticles: 20,
+          //   gravity: 0.05,
+          //   colors: const [Colors.orange, Colors.yellow, Colors.pink],
+          //   // blastDirection:,
+          // )
+          )
     ]);
   }
 }
