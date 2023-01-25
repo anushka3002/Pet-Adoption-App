@@ -30,31 +30,47 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
     return Stack(alignment: Alignment.center, children: [
       Scaffold(
           appBar: AppBar(
-            title: const Text("Welcome"),
+            title: const Text("Pet Details"),
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Image.asset(widget.pet_details.image),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                widget.pet_details.name,
-                textAlign: TextAlign.start,
-                style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                widget.pet_details.price,
-                style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                widget.pet_details.age,
-                style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
-              ),
-            ],
+          body: Container(
+            decoration: BoxDecoration(color: Color.fromARGB(255, 144, 189, 225)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Image.asset(widget.pet_details.image),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(50.0),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Hey I am ${widget.pet_details.name},",
+                            textAlign: TextAlign.start,
+                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            "Price: ${widget.pet_details.price}",
+                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            "Age:  ${widget.pet_details.age}",
+                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: ElevatedButton(
@@ -68,10 +84,11 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(ctx).pop();
+                        ref.watch(homeProvider).adoptedNow = true;
                       },
                       child: Center(
                         child: Container(
-                          color: Color.fromARGB(255, 204, 150, 222),
+                          color: Colors.blue,
                           padding: const EdgeInsets.all(14),
                           child: const Text(
                             "okay",

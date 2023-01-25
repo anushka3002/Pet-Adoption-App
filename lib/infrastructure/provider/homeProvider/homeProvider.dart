@@ -9,6 +9,7 @@ class HomeProvider extends ChangeNotifier {
   List historyData = [];
   List<PetDataNewTile> adoptedPet = [];
   List<PetDataNewTile> students = [];
+  bool adoptedNow = false;
 
   startData() {
     students = [

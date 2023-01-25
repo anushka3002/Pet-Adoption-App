@@ -33,17 +33,26 @@ class _HomePageState extends ConsumerState<HomePage> {
             children: [
               const Text(
                 "Find a new friend",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
                 textAlign: TextAlign.start,
               ),
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HistoryPage()));
                 },
-                child: const Text(
-                  "History",
-                  style: TextStyle(fontWeight: FontWeight.w400, color: Colors.white),
-                ),
+                child: Row(children: const [
+                  Icon(
+                    Icons.history,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    "History",
+                    style: TextStyle(fontWeight: FontWeight.w400, color: Colors.white, fontSize: 15),
+                  )
+                ]),
               )
             ],
           ),
@@ -93,7 +102,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 decoration: BoxDecoration(
                                     color: ref.watch(homeProvider).historyData[i] == true
                                         ? Colors.grey
-                                        : const Color.fromARGB(156, 207, 195, 237),
+                                        : const Color.fromARGB(221, 203, 235, 247),
                                     borderRadius: BorderRadius.circular(50)),
                                 child: Row(
                                   children: [
@@ -111,7 +120,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(top: 8.0),
-                                          child: Text(ref.watch(homeProvider).historyData[i] == true ? "Already adopted" : ""),
+                                          child: Text(
+                                            ref.watch(homeProvider).historyData[i] == true ? "Already adopted" : "",
+                                            style: TextStyle(color: Color.fromARGB(255, 79, 76, 76)),
+                                          ),
                                         )
                                       ],
                                     ),
