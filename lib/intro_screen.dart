@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/infrastructure/provider/registration_provider.dart';
 
@@ -23,33 +20,35 @@ class _IntroScreenState extends ConsumerState<IntroScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Color.fromARGB(255, 167, 154, 228)),
+      decoration: const BoxDecoration(color: Colors.blue),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-        child: Column(
-          children: const [
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/images/rabbit.jpeg'),
-              radius: 220,
-            ),
-            Text(
-              'Lets Find A Lovely Pet Or A Friend!',
-              style: TextStyle(color: Colors.black, fontSize: 30, decoration: TextDecoration.none),
-              textAlign: TextAlign.start,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Now its easier than ever to find a friend or a new replacement for the family.',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 78, 77, 77),
-                  fontSize: 15,
-                  fontWeight: FontWeight.w300,
-                  decoration: TextDecoration.none),
-              textAlign: TextAlign.start,
-            )
-          ],
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 100, bottom: 20),
+        child: Center(
+          child: Column(
+            children: const [
+              CircleAvatar(
+                backgroundImage: AssetImage('assets/images/rabbit.jpeg'),
+                radius: 220,
+              ),
+              Text(
+                'Lets Find A Lovely Pet Or A Friend!',
+                style: TextStyle(color: Colors.black, fontSize: 30, decoration: TextDecoration.none),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                'Now its easier than ever to find a friend or a new replacement for the family.',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 55, 51, 51),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w300,
+                    decoration: TextDecoration.none),
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
         ),
       ),
     );

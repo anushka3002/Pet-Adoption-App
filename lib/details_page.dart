@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_app/infrastructure/provider/registration_provider.dart';
@@ -31,33 +30,31 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
     return Stack(alignment: Alignment.center, children: [
       Scaffold(
           appBar: AppBar(
-            title: Text("Welcome"),
+            title: const Text("Welcome"),
           ),
-          body: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Image.asset(widget.pet_details.image),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  widget.pet_details.name,
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  widget.pet_details.price,
-                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  widget.pet_details.age,
-                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
-                ),
-              ],
-            ),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image.asset(widget.pet_details.image),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                widget.pet_details.name,
+                textAlign: TextAlign.start,
+                style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                widget.pet_details.price,
+                style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                widget.pet_details.age,
+                style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: Colors.black),
+              ),
+            ],
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: ElevatedButton(
@@ -94,45 +91,10 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
                 ref.read(homeProvider).adoptedPet.add(widget.pet_details);
                 final SharedPreferences _pref = await SharedPreferences.getInstance();
                 await _pref.setString("adoptedPets", widget.pet_details);
-                // historyData[i] = true;
               }
-              print(ref.read(homeProvider).historyData);
-              print("ref.read(homeProvider).historyData[widget.pet_history]");
-              print("adopted");
             },
-            child: Text("Adopted me"),
+            child: const Text("Adopted me"),
           )
-          //  ElevatedButton(
-          //     onPressed: () {
-          //       controller.play();
-          //       // widget.pet_details.adopted =true;
-          //       showDialog(
-          //         context: context,
-          //         builder: (ctx) => AlertDialog(
-          //           title: Text("You’ve now adopted ${widget.pet_details.name}"),
-          //           // content: const Text("You have raised a Alert Dialog Box"),
-          //           actions: <Widget>[
-          //             TextButton(
-          //               onPressed: () {
-          //                 Navigator.of(ctx).pop();
-          //               },
-          //               child: Center(
-          //                 child: Container(
-          //                   color: Color.fromARGB(255, 204, 150, 222),
-          //                   padding: const EdgeInsets.all(14),
-          //                   child: const Text(
-          //                     "okay",
-          //                     textAlign: TextAlign.center,
-          //                     style: TextStyle(color: Colors.white),
-          //                   ),
-          //                 ),
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       );
-          //     },
-          //     child: Text('Adopt me'))),
           // ConfettiWidget(
           //   confettiController: controller,
           //   shouldLoop: true,

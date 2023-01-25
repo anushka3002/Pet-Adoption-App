@@ -1,36 +1,27 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_adoption_app/home_page.dart';
 import 'package:pet_adoption_app/intro_screen.dart';
-import 'package:pet_adoption_app/pet_data2.dart';
 
 void main() {
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
+  @override
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Find a lovely friend'),
+      home: MyHomePage(title: 'Find a lovely friend'),
     );
-    //  ChangeNotifierProvider(
-    //   create: (context) => PetData(),
-    //   child: MaterialApp(
-    //     debugShowCheckedModeBanner: false,
-    //     title: 'Flutter Demo',
-    //     theme: ThemeData(
-    //       primarySwatch: Colors.blue,
-    //     ),
-    //     home: const MyHomePage(title: 'Find a lovely friend'),
-    //   ),
-    // );
   }
 }
 
@@ -44,22 +35,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var adopted = "";
+
   @override
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3),
-        () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage())));
+        () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const IntroScreen())));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
-      child: Center(
-        child: IntroScreen(),
-      ),
+    return const Center(
+      child: IntroScreen(),
     );
   }
 }
