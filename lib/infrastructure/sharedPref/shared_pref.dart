@@ -1,15 +1,27 @@
+import 'package:pet_adoption_app/pet_data_tile_new.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferences {
+class SharedPreferencesData {
   static String anushkaData = "";
-  static Future<bool> saveAnushkaData(bool isUserLoggedInStatus) async {
+  List<String> adoptedPetRef = [];
 
-    SharedPreferences sf = await SharedPreferences.getInstance()
-    return await sf.setBool(anushkaData, isUserLoggedInStatus);
+  static Future<bool> saveAnushkaData(String isUserLoggedInStatus) async {
+    SharedPreferences sf = await SharedPreferences.getInstance();
+    return await sf.setString(anushkaData, "isUserLoggedInStatus");
   }
 
-  static Future<bool?> getUserLoogedInStatusFromSf() async {
+  //  static Future<bool> saveAaa(List<bool> token) async {
+  //   SharedPreferences sf = await SharedPreferences.getInstance();
+  //   return await sf.setBool(adoptedPetRef, tokenn);
+  // }
+
+  // static Future<bool> saveAaa(List<String> tokenn) async {
+  //   SharedPreferences sf = await SharedPreferences.getInstance();
+  //   return await sf.setStringList(adoptedPetRef, tokenn);
+  // }
+
+  static Future<String?> getUserLoogedInStatusFromSf() async {
     SharedPreferences sf = await SharedPreferences.getInstance();
-    return sf.getBool(isUserLoggedIn);
+    return sf.getString(anushkaData);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_app/infrastructure/provider/registration_provider.dart';
+import 'package:pet_adoption_app/infrastructure/sharedPref/shared_pref.dart';
 import 'package:pet_adoption_app/pet_data_tile_new.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,7 @@ class DetailsPage extends ConsumerStatefulWidget {
 class _DetailsPageState extends ConsumerState<DetailsPage> {
   bool isPlaying = false;
   late ConfettiController controller;
+
   @override
   void initState() {
     super.initState();
@@ -27,6 +29,15 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    getDataabc() async {
+      var datanew = await SharedPreferencesData.getUserLoogedInStatusFromSf();
+      print(datanew);
+      print("datanew");
+    }
+
+    getDataabc();
+    print(ref.watch(homeProvider).historyData[widget.pet_history]);
+    print("ref.watch(homeProvider).historyData[widget.pet_history]");
     return Stack(alignment: Alignment.center, children: [
       Scaffold(
           appBar: AppBar(
@@ -75,47 +86,46 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 27, 107, 173),
+              backgroundColor: ref.watch(homeProvider).historyData[widget.pet_history] == false
+                  ? Color.fromARGB(255, 27, 107, 173)
+                  : Colors.grey,
             ),
             onPressed: () async {
-              showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Text("You’ve now adopted ${widget.pet_details.name}"),
-                  // content: const Text("You have raised a Alert Dialog Box"),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                        ref.watch(homeProvider).adoptedNow = true;
-                      },
-                      child: Center(
-                        child: Container(
-                          color: Colors.blue,
-                          padding: const EdgeInsets.all(14),
-                          child: const Text(
-                            "okay",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white),
+              if (ref.read(homeProvider).historyData[widget.pet_history] == false) {
+                ref.read(homeProvider).historyData[widget.pet_history] = true;
+                ref.read(homeProvider).adoptedPet.add(widget.pet_details);
+                ref.read(homeProvider).dataNotify();
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: Text("You’ve now adopted ${widget.pet_details.name}"),
+                    // content: const Text("You have raised a Alert Dialog Box"),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          // ref.watch(homeProvider).adoptedNow = true;
+                        },
+                        child: Center(
+                          child: Container(
+                            color: Colors.blue,
+                            padding: const EdgeInsets.all(14),
+                            child: const Text(
+                              "okay",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-              if (ref.read(homeProvider).historyData[widget.pet_history] == true) {
-                widget.pet_history = false;
-              } else {
-                ref.read(homeProvider).historyData[widget.pet_history] = true;
-                ref.read(homeProvider).adoptedPet.add(widget.pet_details);
-                final SharedPreferences _pref = await SharedPreferences.getInstance();
-                await _pref.setString("adoptedPets", widget.pet_details);
+                    ],
+                  ),
+                );
               }
             },
-            child: Padding(
+            child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 120, vertical: 20),
-              child: const Text(
+              child: Text(
                 "Adopt me",
                 style: TextStyle(fontSize: 20),
               ),

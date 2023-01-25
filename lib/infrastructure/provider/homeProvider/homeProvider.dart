@@ -9,7 +9,7 @@ class HomeProvider extends ChangeNotifier {
   List historyData = [];
   List<PetDataNewTile> adoptedPet = [];
   List<PetDataNewTile> pets = [];
-  bool adoptedNow = false;
+  // bool adoptedNow = false;
 
   startData() {
     pets = [
@@ -77,5 +77,9 @@ class HomeProvider extends ChangeNotifier {
     for (var _ in (pets ?? [])) {
       historyData.add(false);
     }
+  }
+
+  dataNotify() {
+    notifyListeners();
   }
 }

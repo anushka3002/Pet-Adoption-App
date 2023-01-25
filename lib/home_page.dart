@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/details_page.dart';
 import 'package:pet_adoption_app/history_page.dart';
 import 'package:pet_adoption_app/infrastructure/provider/registration_provider.dart';
+import 'package:pet_adoption_app/pet_data_tile_new.dart';
 import 'package:pet_adoption_app/theme/theme_manager.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -16,15 +17,25 @@ class HomePage extends ConsumerStatefulWidget {
 ThemeManager _themeManager = ThemeManager();
 
 class _HomePageState extends ConsumerState<HomePage> {
-  void updateList(String value) {
-    setState(() {
-      ref.read(homeProvider).pets =
-          ref.read(homeProvider).pets.where((element) => element.name!.toLowerCase().contains(value.toLowerCase())).toList();
-    });
+  List<PetDataNewTile> display_pet_data = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    display_pet_data = ref.read(homeProvider).pets;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    void updateList(String value) {
+      print(value.length);
+      setState(() {
+        display_pet_data =
+            ref.read(homeProvider).pets.where((element) => element.name!.toLowerCase().contains(value.toLowerCase())).toList();
+      });
+    }
+
     return Scaffold(
         // appBar: AppBar(title: Text("Theme"), actions: [
         //   Switch(
@@ -92,7 +103,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               )
             : Expanded(
                 child: ListView.builder(
-                    itemCount: ref.read(homeProvider).pets.length,
+                    itemCount: display_pet_data.length,
                     itemBuilder: (BuildContext context, i) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -123,11 +134,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         borderRadius: BorderRadius.circular(8.0),
                                         child: Padding(
                                             padding: const EdgeInsets.all(20),
-                                            child: Image.asset(ref.read(homeProvider).pets[i].image, width: 200, height: 150))),
+                                            child: Image.asset(display_pet_data[i].image, width: 200, height: 150))),
                                     Column(
                                       children: [
                                         Text(
-                                          ref.read(homeProvider).pets[i].name,
+                                          display_pet_data[i].name,
                                           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                         ),
                                         Padding(
