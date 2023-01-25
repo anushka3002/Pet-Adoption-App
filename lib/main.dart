@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pet_adoption_app/home_page.dart';
 import 'package:pet_adoption_app/intro_screen.dart';
-import 'package:pet_adoption_app/pets_data.dart';
-import 'package:provider/provider.dart';
+import 'package:pet_adoption_app/pet_data2.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,17 +16,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => PetData(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MyHomePage(title: 'Find a lovely friend'),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const MyHomePage(title: 'Find a lovely friend'),
     );
+    //  ChangeNotifierProvider(
+    //   create: (context) => PetData(),
+    //   child: MaterialApp(
+    //     debugShowCheckedModeBanner: false,
+    //     title: 'Flutter Demo',
+    //     theme: ThemeData(
+    //       primarySwatch: Colors.blue,
+    //     ),
+    //     home: const MyHomePage(title: 'Find a lovely friend'),
+    //   ),
+    // );
   }
 }
 

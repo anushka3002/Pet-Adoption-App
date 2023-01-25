@@ -2,9 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_adoption_app/infrastructure/provider/registration_provider.dart';
 
-class IntroScreen extends StatelessWidget {
+class IntroScreen extends ConsumerStatefulWidget {
   const IntroScreen({super.key});
+
+  @override
+  ConsumerState<IntroScreen> createState() => _IntroScreenState();
+}
+
+class _IntroScreenState extends ConsumerState<IntroScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    ref.read(homeProvider).startData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

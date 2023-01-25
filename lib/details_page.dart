@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -21,7 +23,12 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   bool isPlaying = false;
-  final controller = ConfettiController();
+  late ConfettiController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = ConfettiController(duration: const Duration(seconds: 10));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +66,8 @@ class _DetailsPageState extends State<DetailsPage> {
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: ElevatedButton(
               onPressed: () {
-                // controller.play();
+                controller.play();
+                // widget.adopted =true;
                 showDialog(
                   context: context,
                   builder: (ctx) => AlertDialog(
@@ -87,11 +95,17 @@ class _DetailsPageState extends State<DetailsPage> {
                 );
               },
               child: Text('Adopt me'))),
-      // ConfettiWidget(
-      //   confettiController: controller,
-      //   shouldLoop: true,
-      //   // blastDirection:,
-      // )
+      ConfettiWidget(
+        confettiController: controller,
+        shouldLoop: true,
+        blastDirection: pi,
+        particleDrag: 0.05,
+        emissionFrequency: 0.05,
+        numberOfParticles: 20,
+        gravity: 0.05,
+        colors: const [Colors.orange, Colors.yellow, Colors.pink],
+        // blastDirection:,
+      )
     ]);
   }
 }
