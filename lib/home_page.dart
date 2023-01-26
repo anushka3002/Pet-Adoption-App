@@ -113,7 +113,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             } else {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => DetailsPage(
-                                  pet_details: ref.read(homeProvider).pets[i],
+                                  pet_details: display_pet_data[i],
                                   pet_history: i,
                                 ),
                               ));

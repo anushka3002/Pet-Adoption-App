@@ -45,7 +45,7 @@ class HomeProvider extends ChangeNotifier {
         image: "assets/images/fish.jpeg",
       ),
       PetDataNewTile(
-        name: "Dog2",
+        name: "Dog(Furry)",
         age: "26",
         price: "50",
         image: "assets/images/dog2.jpeg",
