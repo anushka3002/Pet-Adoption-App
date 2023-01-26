@@ -157,7 +157,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(20.0),
+                                      padding: const EdgeInsets.all(15.0),
                                       child: Text(
                                         display_pet_data[i].name,
                                         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
