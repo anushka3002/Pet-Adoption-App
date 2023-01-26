@@ -38,7 +38,18 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(widget.pet_details.image),
+                Container(
+                  decoration: BoxDecoration(color: Color.fromARGB(255, 200, 219, 251)),
+                  child: InteractiveViewer(
+                      panEnabled: false, // Set it to false
+                      boundaryMargin: EdgeInsets.all(100),
+                      minScale: 0.9,
+                      maxScale: 2,
+                      child: Image.asset(
+                        widget.pet_details.image,
+                        fit: BoxFit.cover,
+                      )),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -89,12 +100,10 @@ class _DetailsPageState extends ConsumerState<DetailsPage> {
                   context: context,
                   builder: (ctx) => AlertDialog(
                     title: Text("You’ve now adopted ${widget.pet_details.name}"),
-                    // content: const Text("You have raised a Alert Dialog Box"),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          // ref.watch(homeProvider).adoptedNow = true;
                         },
                         child: Center(
                           child: Container(
