@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_adoption_app/infrastructure/provider/registration_provider.dart';
-import 'package:pet_adoption_app/infrastructure/sharedPref/shared_pref.dart';
 import 'package:pet_adoption_app/pet_data_tile_new.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
